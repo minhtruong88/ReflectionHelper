@@ -1,0 +1,5 @@
+C:\projects\Common\ReflectionHelper\bin\Debug\ReflectionHelper.dll
+C:\projects\Common\ReflectionHelper\bin\Debug\ReflectionHelper.pdb
+C:\projects\Common\ReflectionHelper\obj\Debug\ReflectionHelper.dll
+C:\projects\Common\ReflectionHelper\obj\Debug\ReflectionHelper.pdb
+C:\projects\Common\ReflectionHelper\obj\Debug\ReflectionHelper.csprojResolveAssemblyReference.cache
