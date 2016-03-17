@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace ReflectionHelper
@@ -17,9 +18,42 @@ namespace ReflectionHelper
             }
             return result;
         }
+
+        public static DataTable List_To_DataTable<T>(this IList<T> data) where T : new()
+        {
+            T item = new T();
+            DataTable result = new DataTable();
+            result = result.Create_DataColumns(item);
+            result = result.Create_DataRow(data);
+            return result;
+        }
+
         #endregion
 
         #region "private methods"
+
+        private static DataTable Create_DataRow<T>(this DataTable result, IList<T> data)
+        {
+            foreach (T item in data)
+            {
+                DataRow row = result.NewRow();
+                foreach(DataColumn column in result.Columns)
+                {   
+                    row[column.ColumnName] = item.Get_Property(column.ColumnName);                    
+                }
+                result.Rows.Add(row);
+            }
+            return result;
+        }
+
+        private static DataTable Create_DataColumns<T>(this DataTable result, T data)
+        {
+            foreach (PropertyInfo property in data.GetType().GetProperties())
+            {
+                result.Columns.Add(new DataColumn(property.Name, property.PropertyType));
+            }
+            return result;
+        }
 
         private static T DataRow_To_Object<T>(this T result, IList<ValuePair> Mapper, DataRow row, DataColumnCollection columns)
         {
