@@ -3,8 +3,22 @@
   <Class Name="ReflectionHelper.ReflectionExtension">
     <Position X="2.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>ReflectionExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReflectionHelper.DataSet_Extension">
+    <Position X="6" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAQAIAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataSet_Extension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReflectionHelper.ValuePair">
+    <Position X="2" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgCAAAAAA=</HashCode>
+      <FileName>ValuePair.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

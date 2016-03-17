@@ -14,7 +14,7 @@ namespace ReflectionHelper
             {
                 if (property.Name.ToLower() == name.ToLower())
                 {
-                    property.SetValue(data, value, null);
+                    property.SetValue(data, Convert.ChangeType(value, property.PropertyType), null);
                 }
             }
             return data;
