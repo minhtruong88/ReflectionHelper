@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace ReflectionHelper
                 DataRow row = result.NewRow();
                 foreach(DataColumn column in result.Columns)
                 {   
-                    row[column.ColumnName] = item.Get_Property(column.ColumnName);                    
+                    row[column.ColumnName] = item.Get_Property_Value(column.ColumnName);                    
                 }
                 result.Rows.Add(row);
             }
@@ -48,21 +49,21 @@ namespace ReflectionHelper
 
         private static DataTable Create_DataColumns<T>(this DataTable result, T data)
         {
-            foreach (PropertyInfo property in data.GetType().GetProperties())
+            foreach (PropertyInfo property in data.Get_Properties())
             {
                 result.Columns.Add(new DataColumn(property.Name, property.PropertyType));
             }
             return result;
         }
 
-        private static T DataRow_To_Object<T>(this T result, IList<ValuePair> Mapper, DataRow row, DataColumnCollection columns)
+        private static T DataRow_To_Object<T>(this T result, IList<ValuePair> Mapper, DataRow row, ICollection columns)
         {
             foreach (DataColumn column in columns)
             {
                 ValuePair item = Mapper.IndexOf(column.ColumnName);
-                if (item != null)
+                if (item.Has_Result())
                 {
-                    result = result.Set_Property(item.Value, row.GetColumn(column.ColumnName));                    
+                    result = result.Set_Property_Value(item.Value, row.GetColumn(column.ColumnName));                    
                 }
             }
             return result;
@@ -76,19 +77,23 @@ namespace ReflectionHelper
         private static T IndexOf<T>(this IList<T> data, string name) where T : new()
         {
             T result = default(T);
-            int index = 0;
             foreach (T item in data)
             {
-                if (item.Get_Property(name) != null)
+                if (item.Get_Property_Value(name).Has_Result())
                 {
                     result = item;
                     break;
-                }
-                index++;
+                }            
             }
             return result;
         }
 
+        private static bool Has_Result<T>(this T item)
+        {
+            bool result = false;
+            result = item != null;
+            return result;
+        }
         #endregion
     }
 }

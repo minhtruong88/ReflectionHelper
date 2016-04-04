@@ -8,29 +8,52 @@ namespace ReflectionHelper
 {
     public static class ReflectionExtension
     {
-        public static T Set_Property<T>(this T data, string name, Object value)
+        #region "public extension"
+
+        public static T Set_Property_Value<T>(this T result, string name, Object value)
         {
-            foreach (PropertyInfo property in data.GetType().GetProperties())
+            PropertyInfo property = result.Get_Properties().Find_Property_By_Name(name);
+            try
             {
-                if (property.Name.ToLower() == name.ToLower())
-                {
-                    property.SetValue(data, Convert.ChangeType(value, property.PropertyType), null);
-                }
+                property.SetValue(result, Convert.ChangeType(value, property.PropertyType), null);
             }
-            return data;
+            catch (Exception)
+            {
+
+            }
+            return result;
         }
 
-        public static Object Get_Property<T>(this T data, string name)
+        public static Object Get_Property_Value<T>(this T data, string name)
         {
             Object result = null;
-            foreach (PropertyInfo property in data.GetType().GetProperties())
+            result = data.Get_Properties().Find_Property_By_Name(name).GetValue(data, null);            
+            return result;
+        }
+
+        #endregion
+
+        #region "private helper methods extension"
+
+        internal static IList<PropertyInfo> Get_Properties<T>(this T result)
+        {
+            return result.GetType().GetProperties();
+        }
+
+        private static PropertyInfo Find_Property_By_Name(this IList<PropertyInfo> data, string name)
+        {
+            PropertyInfo result = null;
+            foreach (PropertyInfo property in data)
             {
                 if (property.Name.ToLower() == name.ToLower())
                 {
-                    result = property.GetValue(data, null);
+                    result = property;
+                    break;
                 }
             }
             return result;
         }
+
+        #endregion
     }
 }
